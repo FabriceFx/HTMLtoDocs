@@ -19,6 +19,84 @@ function showSidebar() {
 /**
  * Main function to convert HTML and insert it into the Email Draft table
  */
+function insertHtmlIntoDoc(htmlString) {
+  try {
+    const doc = DocumentApp.getActiveDocument();
+    const body = doc.getBody();
+    
+    // 1. Find the Email Draft table
+    const tables = body.getTables();
+    let emailTable = null;
+    
+    if (tables.length > 0) {
+      emailTable = tables[0]; 
+    } else {
+      throw new Error("Aucun tableau de 'Brouillon d'e-mail' trouvé. Veuillez d'abord insérer un brouillon via @email.");
+    }
+
+    const numRows = emailTable.getNumRows();
+    const bodyCell = emailTable.getRow(numRows - 1).getCell(0);
+    bodyCell.clear();
+
+    // 2. Convert HTML to a temporary Google Doc
+    const tempFileId = convertHtmlToTempDoc(htmlString);
+    const tempDoc = DocumentApp.openById(tempFileId);
+    const tempBody = tempDoc.getBody();
+
+    // 3. Copy elements with Deep Style preservation
+    const numChildren = tempBody.getNumChildren();
+    for (let i = 0; i < numChildren; i++) {
+      const sourceElement = tempBody.getChild(i);
+      appendElementWithStyles(bodyCell, sourceElement);
+    }
+
+    // 4. Cleanup: Remove the temporary file and doc
+    tempDoc.saveAndClose();
+    Drive.Files.remove(tempFileId);
+
+    // Remove the very first empty paragraph created by bodyCell.clear() if it's still there
+    if (bodyCell.getNumChildren() > 1 && bodyCell.getChild(0).asParagraph().getText() === "") {
+      bodyCell.removeChild(bodyCell.getChild(0));
+    }
+
+    return "HTML inséré avec succès en conservant les styles !";
+
+  } catch (e) {
+    return "Erreur lors de l'insertion : " + e.message;
+  }
+}
+
+/**
+ * Helper to append elements while forcing attribute preservation
+ */
+function appendElementWithStyles(container, element) {
+  const type = element.getType();
+  
+  if (type == DocumentApp.ElementType.PARAGRAPH) {
+    const p = container.appendParagraph(element.asParagraph().copy());
+    p.setAttributes(element.asParagraph().getAttributes());
+  } 
+  else if (type == DocumentApp.ElementType.LIST_ITEM) {
+    const li = container.appendListItem(element.asListItem().copy());
+    li.setAttributes(element.asListItem().getAttributes());
+  } 
+  else if (type == DocumentApp.ElementType.TABLE) {
+    const sourceTable = element.asTable();
+    const targetTable = container.appendTable(sourceTable.copy());
+    
+    // Force copy of cell attributes (background, borders) which are often lost
+    for (let r = 0; r < sourceTable.getNumRows(); r++) {
+      for (let c = 0; c < sourceTable.getRow(r).getNumCells(); c++) {
+        const sCell = sourceTable.getRow(r).getCell(c);
+        const tCell = targetTable.getRow(r).getCell(c);
+        tCell.setAttributes(sCell.getAttributes());
+      }
+    }
+  } 
+  else if (type == DocumentApp.ElementType.INLINE_IMAGE) {
+    container.appendImage(element.asInlineImage().copy());
+  }
+}
 
 /**
  * Generates HTML using Gemini API (v1beta)
