@@ -19,58 +19,6 @@ function showSidebar() {
 /**
  * Main function to convert HTML and insert it into the Email Draft table
  */
-function insertHtmlIntoDoc(htmlString) {
-  try {
-    const doc = DocumentApp.getActiveDocument();
-    const body = doc.getBody();
-    
-    // 1. Find the Email Draft table
-    const tables = body.getTables();
-    let emailTable = null;
-    
-    if (tables.length > 0) {
-      emailTable = tables[0]; 
-    } else {
-      throw new Error("Aucun tableau de 'Brouillon d'e-mail' trouvé. Veuillez d'abord insérer un brouillon via @email.");
-    }
-
-    const numRows = emailTable.getNumRows();
-    const bodyCell = emailTable.getRow(numRows - 1).getCell(0);
-    bodyCell.clear();
-
-    // 2. Convert HTML to a temporary Google Doc
-    const tempFileId = convertHtmlToTempDoc(htmlString);
-    const tempDoc = DocumentApp.openById(tempFileId);
-    const tempBody = tempDoc.getBody();
-
-    // 3. Copy elements
-    const numChildren = tempBody.getNumChildren();
-    for (let i = 0; i < numChildren; i++) {
-      const child = tempBody.getChild(i).copy();
-      const type = child.getType();
-
-      try {
-        if (type == DocumentApp.ElementType.PARAGRAPH) {
-          bodyCell.appendParagraph(child.asParagraph());
-        } else if (type == DocumentApp.ElementType.LIST_ITEM) {
-          bodyCell.appendListItem(child.asListItem());
-        } else if (type == DocumentApp.ElementType.TABLE) {
-          bodyCell.appendTable(child.asTable());
-        } else if (type == DocumentApp.ElementType.INLINE_IMAGE) {
-          bodyCell.appendImage(child.asInlineImage());
-        }
-      } catch (e) {
-        console.error("Erreur lors de la copie de l'élément " + i + ": " + e.message);
-      }
-    }
-
-    // 4. Cleanup
-    Drive.Files.remove(tempFileId);
-    return "Succès ! Le contenu a été inséré.";
-  } catch (e) {
-    return "Erreur : " + e.message;
-  }
-}
 
 /**
  * Generates HTML using Gemini API (v1beta)
