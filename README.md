@@ -30,7 +30,7 @@ Insérez du code HTML stylisé dans vos brouillons d'e-mails Google Docs avec l'
 3. **Activer l'API Drive** : 
    - Dans l'éditeur Apps Script, cliquez sur le bouton **+** à côté de **Services**.
    - Sélectionnez **Drive API** et validez l'ajout.
-4. Actualisez votre Google Doc pour voir apparaître le menu **HTML to Email**.
+4. Actualisez votre Google Doc pour voir apparaître le menu **HTML to Docs**.
 
 ## 💡 Exemples d'utilisation
 
@@ -97,8 +97,8 @@ Insert styled HTML code into your Google Docs Email Drafts with the help of Gemi
    - `appsscript.json`: Configuration manifest for services and permissions.
 3. **Enable Drive API**: 
    - In the Apps Script editor, click the **+** button next to **Services**.
-   - Select **Drive API** and confirm.
-4. Refresh your Google Doc to see the **HTML to Email** menu.
+   - Search for **Drive API** and add it.
+4. Refresh your Google Doc to see the **HTML to Docs** menu.
 
 ## 💡 Usage Examples
 

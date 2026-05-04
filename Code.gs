@@ -4,7 +4,7 @@
 
 function onOpen() {
   DocumentApp.getUi()
-    .createMenu('HTML to Email')
+    .createMenu('HTML to Docs')
     .addItem('Insérer du HTML...', 'showSidebar')
     .addToUi();
 }

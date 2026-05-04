@@ -1,256 +1,278 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-      :root {
-        --md-sys-color-primary: #0061a4;
-        --md-sys-color-on-primary: #ffffff;
-        --md-sys-color-primary-container: #d1e4ff;
-        --md-sys-color-on-primary-container: #001d36;
-        --md-sys-color-secondary: #535f70;
-        --md-sys-color-surface: #fdfcff;
-        --md-sys-color-on-surface: #1a1c1e;
-        --md-sys-color-surface-variant: #dfe2eb;
-        --md-sys-color-on-surface-variant: #43474e;
-        --md-sys-color-outline: #73777f;
-        --md-sys-color-error: #ba1a1a;
-        --md-sys-color-success: #137333;
-      }
 
-      body {
-        font-family: 'Roboto', sans-serif;
-        padding: 12px;
-        margin: 0;
-        background-color: #f8f9fa;
-        color: var(--md-sys-color-on-surface);
-      }
+<head>
+  <base target="_top">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --md-sys-color-primary: #0061a4;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-primary-container: #d1e4ff;
+      --md-sys-color-on-primary-container: #001d36;
+      --md-sys-color-secondary: #535f70;
+      --md-sys-color-surface: #fdfcff;
+      --md-sys-color-on-surface: #1a1c1e;
+      --md-sys-color-surface-variant: #dfe2eb;
+      --md-sys-color-on-surface-variant: #43474e;
+      --md-sys-color-outline: #73777f;
+      --md-sys-color-error: #ba1a1a;
+      --md-sys-color-success: #137333;
+    }
 
-      .card {
-        background: white;
-        border-radius: 12px;
-        padding: 16px;
-        margin-bottom: 12px;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        border: 1px solid var(--md-sys-color-surface-variant);
-      }
+    body {
+      font-family: 'Roboto', sans-serif;
+      padding: 12px;
+      margin: 0;
+      background-color: #f8f9fa;
+      color: var(--md-sys-color-on-surface);
+    }
 
-      h2 {
-        font-size: 1rem;
-        font-weight: 500;
-        margin: 0 0 12px 0;
-        display: block;
-        color: var(--md-sys-color-primary);
-      }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--md-sys-color-surface-variant);
+    }
 
-      .input-group {
-        margin-bottom: 12px;
-      }
+    h2 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 0 0 12px 0;
+      display: block;
+      color: var(--md-sys-color-primary);
+    }
 
-      label {
-        display: block;
-        font-size: 0.75rem;
-        font-weight: 500;
-        margin-bottom: 4px;
-        color: var(--md-sys-color-on-surface-variant);
-      }
+    .input-group {
+      margin-bottom: 12px;
+      height: auto;
+    }
 
-      input[type="password"],
-      textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid var(--md-sys-color-outline);
-        border-radius: 8px;
-        font-size: 13px;
-        box-sizing: border-box;
-        background-color: transparent;
-      }
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: var(--md-sys-color-on-surface-variant);
+    }
 
-      .custom-button {
-        display: block;
-        width: 100%;
-        height: 44px;
-        line-height: 44px;
-        border-radius: 22px;
-        text-align: center;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        user-select: none;
-        transition: background-color 0.2s;
-        box-sizing: border-box;
-        border: none;
-        margin: 8px 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--md-sys-color-outline);
+      border-radius: 8px;
+      font-size: 13px;
+      box-sizing: border-box;
+      background-color: transparent;
+    }
 
-      .btn-primary {
-        background-color: var(--md-sys-color-primary);
-        color: var(--md-sys-color-on-primary);
-      }
+    .custom-button {
+      display: block;
+      width: 100%;
+      height: 44px;
+      line-height: 44px;
+      border-radius: 22px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.2s;
+      box-sizing: border-box;
+      border: none;
+      margin: 8px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-      .btn-tonal {
-        background-color: var(--md-sys-color-primary-container);
-        color: var(--md-sys-color-on-primary-container);
-      }
+    .btn-primary {
+      background-color: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+    }
 
-      .custom-button:hover {
-        opacity: 0.9;
-      }
+    .btn-tonal {
+      background-color: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+    }
 
-      .custom-button:active {
-        transform: scale(0.98);
-      }
+    .custom-button:hover {
+      opacity: 0.9;
+    }
 
-      .custom-button.disabled {
-        background-color: #e1e2e5 !important;
-        color: #909194 !important;
-        cursor: not-allowed;
-        transform: none;
-      }
+    .custom-button:active {
+      transform: scale(0.98);
+    }
 
-      .material-icons {
-        font-size: 20px;
-        vertical-align: middle;
-        margin-right: 4px;
-        display: inline-block;
-      }
+    .custom-button.disabled {
+      background-color: #e1e2e5 !important;
+      color: #909194 !important;
+      cursor: not-allowed;
+      transform: none;
+    }
 
-      #status {
-        margin-top: 8px;
-        font-size: 12px;
-        padding: 10px;
-        border-radius: 8px;
-        display: none;
-      }
+    .material-icons {
+      font-size: 20px;
+      vertical-align: middle;
+      margin-right: 4px;
+      display: inline-block;
+    }
 
-      .success { background-color: #e6f4ea; color: var(--md-sys-color-success); }
-      .error { background-color: #fce8e6; color: var(--md-sys-color-error); }
+    #status {
+      margin-top: 8px;
+      font-size: 12px;
+      padding: 10px;
+      border-radius: 8px;
+      display: none;
+    }
 
-      .loader {
-        display: none;
-        margin-top: 8px;
-        text-align: center;
-        font-size: 12px;
-      }
-    </style>
-  </head>
-  <body>
+    .success {
+      background-color: #e6f4ea;
+      color: var(--md-sys-color-success);
+    }
 
-    <div class="card">
-      <h2><span class="material-icons">auto_awesome</span> Génération IA</h2>
-      <div class="input-group">
-        <label>Clé API Gemini</label>
-        <input type="password" id="apiKey" placeholder="...">
-      </div>
-      <div class="input-group">
-        <label>Votre demande</label>
-        <textarea id="prompt" placeholder="Newsletter..."></textarea>
-      </div>
-      <div id="genBtn" class="custom-button btn-tonal" onclick="generateWithGemini()">
-        <span class="material-icons">auto_awesome</span> Générer le HTML
-      </div>
+    .error {
+      background-color: #fce8e6;
+      color: var(--md-sys-color-error);
+    }
+
+    .loader {
+      display: none;
+      margin-top: 8px;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    #prompt {
+      height: 120px;
+      resize: vertical;
+    }
+
+    #htmlInput {
+      height: 200px;
+      resize: vertical;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h2><span class="material-icons">auto_awesome</span> Génération IA</h2>
+    <div class="input-group">
+      <label>Clé API Gemini</label>
+      <input type="password" id="apiKey" placeholder="...">
+    </div>
+    <div class="input-group">
+      <label>Votre demande</label>
+      <textarea id="prompt"
+        placeholder="Crée une newsletter interne pour annoncer la mise à jour de notre politique de télétravail. Utilise un titre accrocheur, deux sections et un bouton 'En savoir plus'."></textarea>
+    </div>
+    <div id="genBtn" class="custom-button btn-tonal" onclick="generateWithGemini()">
+      <span class="material-icons">auto_awesome</span> Générer le HTML
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="material-icons">code</span> Code HTML</h2>
+    <div class="input-group">
+      <textarea id="htmlInput"></textarea>
+    </div>
+    <div id="insertBtn" class="custom-button btn-primary" onclick="insertHtml()">
+      <span class="material-icons">send</span> Insérer dans Google Docs
     </div>
 
-    <div class="card">
-      <h2><span class="material-icons">code</span> Code HTML</h2>
-      <div class="input-group">
-        <textarea id="htmlInput" style="height: 120px;"></textarea>
-      </div>
-      <div id="insertBtn" class="custom-button btn-primary" onclick="insertHtml()">
-        <span class="material-icons">send</span> Insérer dans le Doc
-      </div>
-      
-      <div id="loader" class="loader">Traitement...</div>
-      <div id="status"></div>
-    </div>
+    <div id="loader" class="loader">Traitement...</div>
+    <div id="status"></div>
+  </div>
 
-    <script>
-      window.onload = function() {
-        google.script.run
-          .withSuccessHandler(function(key) {
-            if (key) document.getElementById('apiKey').value = key;
-          })
-          .getSavedApiKey();
-      };
+  <script>
+    window.onload = function () {
+      google.script.run
+        .withSuccessHandler(function (key) {
+          if (key) document.getElementById('apiKey').value = key;
+        })
+        .getSavedApiKey();
+    };
 
-      function setButtonsDisabled(disabled) {
-        const btns = document.querySelectorAll('.custom-button');
-        btns.forEach(btn => {
-          if (disabled) btn.classList.add('disabled');
-          else btn.classList.remove('disabled');
-        });
-      }
+    function setButtonsDisabled(disabled) {
+      const btns = document.querySelectorAll('.custom-button');
+      btns.forEach(btn => {
+        if (disabled) btn.classList.add('disabled');
+        else btn.classList.remove('disabled');
+      });
+    }
 
-      function generateWithGemini() {
-        const btn = document.getElementById('genBtn');
-        if (btn.classList.contains('disabled')) return;
+    function generateWithGemini() {
+      const btn = document.getElementById('genBtn');
+      if (btn.classList.contains('disabled')) return;
 
-        const apiKey = document.getElementById('apiKey').value;
-        const prompt = document.getElementById('prompt').value;
-        if (!apiKey || !prompt) { showStatus("Requis : Clé + Prompt", "error"); return; }
+      const apiKey = document.getElementById('apiKey').value;
+      const prompt = document.getElementById('prompt').value;
+      if (!apiKey || !prompt) { showStatus("Requis : Clé + Prompt", "error"); return; }
 
-        setButtonsDisabled(true);
-        document.getElementById('loader').style.display = 'block';
-        document.getElementById('status').style.display = 'none';
+      setButtonsDisabled(true);
+      document.getElementById('loader').style.display = 'block';
+      document.getElementById('status').style.display = 'none';
 
-        google.script.run
-          .withSuccessHandler(function(response) {
-            setButtonsDisabled(false);
-            document.getElementById('loader').style.display = 'none';
-            if (response.success) {
-              document.getElementById('htmlInput').value = response.html;
-              showStatus("Généré !", "success");
-            } else {
-              showStatus("Erreur : " + response.error, "error");
-            }
-          })
-          .withFailureHandler(function(err) {
-            setButtonsDisabled(false);
-            document.getElementById('loader').style.display = 'none';
-            showStatus("Erreur réseau", "error");
-          })
-          .generateHtmlWithGemini(prompt, apiKey);
-      }
+      google.script.run
+        .withSuccessHandler(function (response) {
+          setButtonsDisabled(false);
+          document.getElementById('loader').style.display = 'none';
+          if (response.success) {
+            document.getElementById('htmlInput').value = response.html;
+            showStatus("Généré !", "success");
+          } else {
+            showStatus("Erreur : " + response.error, "error");
+          }
+        })
+        .withFailureHandler(function (err) {
+          setButtonsDisabled(false);
+          document.getElementById('loader').style.display = 'none';
+          showStatus("Erreur réseau", "error");
+        })
+        .generateHtmlWithGemini(prompt, apiKey);
+    }
 
-      function insertHtml() {
-        const btn = document.getElementById('insertBtn');
-        if (btn.classList.contains('disabled')) return;
+    function insertHtml() {
+      const btn = document.getElementById('insertBtn');
+      if (btn.classList.contains('disabled')) return;
 
-        const html = document.getElementById('htmlInput').value;
-        if (!html.trim()) { showStatus("HTML vide", "error"); return; }
+      const html = document.getElementById('htmlInput').value;
+      if (!html.trim()) { showStatus("HTML vide", "error"); return; }
 
-        setButtonsDisabled(true);
-        document.getElementById('loader').style.display = 'block';
-        document.getElementById('status').style.display = 'none';
+      setButtonsDisabled(true);
+      document.getElementById('loader').style.display = 'block';
+      document.getElementById('status').style.display = 'none';
 
-        google.script.run
-          .withSuccessHandler(function(msg) {
-            setButtonsDisabled(false);
-            document.getElementById('loader').style.display = 'none';
-            if (msg.includes("Erreur")) showStatus(msg, "error");
-            else showStatus("Inséré !", "success");
-          })
-          .withFailureHandler(function(err) {
-            setButtonsDisabled(false);
-            document.getElementById('loader').style.display = 'none';
-            showStatus("Erreur fatale", "error");
-          })
-          .insertHtmlIntoDoc(html);
-      }
+      google.script.run
+        .withSuccessHandler(function (msg) {
+          setButtonsDisabled(false);
+          document.getElementById('loader').style.display = 'none';
+          if (msg.includes("Erreur")) showStatus(msg, "error");
+          else showStatus("Inséré !", "success");
+        })
+        .withFailureHandler(function (err) {
+          setButtonsDisabled(false);
+          document.getElementById('loader').style.display = 'none';
+          showStatus("Erreur fatale", "error");
+        })
+        .insertHtmlIntoDoc(html);
+    }
 
-      function showStatus(msg, type) {
-        const status = document.getElementById('status');
-        status.innerText = msg;
-        status.className = "success error".includes(type) ? type : "";
-        status.classList.add(type);
-        status.style.display = 'block';
-        setTimeout(() => { status.style.display = 'none'; }, 4000);
-      }
-    </script>
-  </body>
+    function showStatus(msg, type) {
+      const status = document.getElementById('status');
+      status.innerText = msg;
+      status.className = "success error".includes(type) ? type : "";
+      status.classList.add(type);
+      status.style.display = 'block';
+      setTimeout(() => { status.style.display = 'none'; }, 4000);
+    }
+  </script>
+</body>
+
 </html>
