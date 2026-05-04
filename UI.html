@@ -2,127 +2,208 @@
 <html>
   <head>
     <base target="_top">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-      body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        padding: 20px;
-        color: #333;
-        background-color: #f8f9fa;
+      :root {
+        --md-sys-color-primary: #0061a4;
+        --md-sys-color-on-primary: #ffffff;
+        --md-sys-color-primary-container: #d1e4ff;
+        --md-sys-color-on-primary-container: #001d36;
+        --md-sys-color-secondary: #535f70;
+        --md-sys-color-on-secondary: #ffffff;
+        --md-sys-color-surface: #fdfcff;
+        --md-sys-color-on-surface: #1a1c1e;
+        --md-sys-color-surface-variant: #dfe2eb;
+        --md-sys-color-on-surface-variant: #43474e;
+        --md-sys-color-outline: #73777f;
+        --md-sys-color-error: #ba1a1a;
+        --md-sys-color-success: #137333;
       }
+
+      body {
+        font-family: 'Roboto', sans-serif;
+        padding: 16px;
+        margin: 0;
+        background-color: #f8f9fa;
+        color: var(--md-sys-color-on-surface);
+      }
+
+      .card {
+        background: white;
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 16px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.05);
+        border: 1px solid var(--md-sys-color-surface-variant);
+      }
+
       h2 {
         font-size: 1.1rem;
-        margin-bottom: 10px;
-        color: #1a73e8;
+        font-weight: 500;
+        margin: 0 0 16px 0;
         display: flex;
         align-items: center;
+        gap: 10px;
+        color: var(--md-sys-color-primary);
+      }
+
+      .input-group {
+        margin-bottom: 20px;
+        position: relative;
+      }
+
+      label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: var(--md-sys-color-on-surface-variant);
+      }
+
+      input[type="password"],
+      textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid var(--md-sys-color-outline);
+        border-radius: 8px;
+        font-size: 14px;
+        box-sizing: border-box;
+        transition: border 0.2s, box-shadow 0.2s;
+        background-color: transparent;
+      }
+
+      input:focus, textarea:focus {
+        outline: none;
+        border: 2px solid var(--md-sys-color-primary);
+        padding: 11px 15px; /* Adjust for border width change */
+      }
+
+      textarea {
+        font-family: 'Roboto Mono', monospace;
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: flex-end;
         gap: 8px;
       }
-      .section {
-        background: white;
-        padding: 15px;
-        border-radius: 12px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        margin-bottom: 20px;
-      }
-      .container {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
-      label {
-        font-size: 12px;
-        font-weight: 600;
-        color: #5f6368;
-      }
-      input, textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #dadce0;
-        border-radius: 6px;
-        font-size: 13px;
-        box-sizing: border-box;
-      }
-      textarea {
-        font-family: 'Courier New', Courier, monospace;
-        resize: vertical;
-      }
+
       button {
-        background-color: #1a73e8;
-        color: white;
-        border: none;
-        padding: 10px 16px;
-        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        height: 40px;
+        padding: 0 24px;
+        border-radius: 20px;
+        font-size: 14px;
         font-weight: 500;
+        border: none;
         cursor: pointer;
-        transition: background-color 0.2s;
-        font-size: 13px;
+        transition: background-color 0.2s, box-shadow 0.2s;
       }
-      button:hover {
-        background-color: #1765cc;
+
+      .btn-primary {
+        background-color: var(--md-sys-color-primary);
+        color: var(--md-sys-color-on-primary);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       }
-      button.secondary {
-        background-color: #f1f3f4;
-        color: #3c4043;
-        border: 1px solid #dadce0;
+
+      .btn-primary:hover {
+        background-color: #004a7d;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
       }
-      button.secondary:hover {
-        background-color: #e8eaed;
+
+      .btn-tonal {
+        background-color: var(--md-sys-color-primary-container);
+        color: var(--md-sys-color-on-primary-container);
       }
+
+      .btn-tonal:hover {
+        background-color: #b5d1ff;
+      }
+
       button:disabled {
-        background-color: #ccc;
+        background-color: #e1e2e5;
+        color: #909194;
+        box-shadow: none;
         cursor: not-allowed;
       }
+
       #status {
-        margin-top: 10px;
-        font-size: 12px;
-        padding: 8px;
-        border-radius: 4px;
+        margin-top: 12px;
+        font-size: 13px;
+        padding: 12px 16px;
+        border-radius: 8px;
         display: none;
+        animation: fadeIn 0.3s;
       }
-      .success { background-color: #e6f4ea; color: #137333; display: block !important; }
-      .error { background-color: #fce8e6; color: #c5221f; display: block !important; }
-      
+
+      .success { background-color: #e6f4ea; color: var(--md-sys-color-success); display: flex !important; align-items: center; gap: 8px; }
+      .error { background-color: #fce8e6; color: var(--md-sys-color-error); display: flex !important; align-items: center; gap: 8px; }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
       .loader {
         display: none;
+        margin-top: 12px;
         text-align: center;
-        margin-top: 8px;
-        font-size: 12px;
-        color: #666;
+        font-size: 13px;
+        color: var(--md-sys-color-secondary);
       }
-      hr { border: 0; border-top: 1px solid #eee; margin: 15px 0; }
+
+      /* Material Icons vertical alignment */
+      .material-icons {
+        font-size: 20px;
+        vertical-align: middle;
+      }
     </style>
   </head>
   <body>
 
-    <!-- Section 1: Gemini Generation -->
-    <div class="section">
-      <h2>✨ Générer avec IA</h2>
-      <div class="container">
-        <div>
-          <label>Clé API Gemini</label>
-          <input type="password" id="apiKey" placeholder="Saisissez votre clé API...">
-        </div>
-        <div>
-          <label>Votre demande (Prompt)</label>
-          <textarea id="prompt" style="height: 80px;" placeholder="Ex: Crée une newsletter pour annoncer les soldes d'été avec un bouton rouge..."></textarea>
-        </div>
-        <button id="genBtn" onclick="generateWithGemini()">Générer le HTML</button>
+    <!-- Gemini AI Card -->
+    <div class="card">
+      <h2><span class="material-icons">auto_awesome</span> Génération IA</h2>
+      <div class="input-group">
+        <label for="apiKey">Clé API Gemini</label>
+        <input type="password" id="apiKey" placeholder="Saisissez votre clé...">
+      </div>
+      <div class="input-group">
+        <label for="prompt">Votre demande (Prompt)</label>
+        <textarea id="prompt" placeholder="Ex: Invitation pour un cocktail..."></textarea>
+      </div>
+      <div class="btn-container">
+        <button id="genBtn" class="btn-tonal" onclick="generateWithGemini()">
+          <span class="material-icons">magic_button</span> Générer
+        </button>
       </div>
     </div>
 
-    <!-- Section 2: HTML Insertion -->
-    <div class="section">
-      <h2>📄 Code HTML</h2>
-      <div class="container">
-        <textarea id="htmlInput" style="height: 180px;" placeholder="<html>...</html>"></textarea>
-        <button id="insertBtn" onclick="insertHtml()">Insérer dans le Brouillon</button>
-        <div id="loader" class="loader">Action en cours...</div>
-        <div id="status"></div>
+    <!-- HTML Content Card -->
+    <div class="card">
+      <h2><span class="material-icons">code</span> Code HTML</h2>
+      <div class="input-group">
+        <textarea id="htmlInput" style="height: 150px;" placeholder="<html>...</html>"></textarea>
       </div>
+      <div class="btn-container">
+        <button id="insertBtn" class="btn-primary" onclick="insertHtml()">
+          <span class="material-icons">send</span> Insérer dans le Doc
+        </button>
+      </div>
+      
+      <div id="loader" class="loader">
+        <span class="material-icons rotating">sync</span> Traitement en cours...
+      </div>
+      <div id="status"></div>
     </div>
 
     <script>
-      // Load saved API key on startup
       window.onload = function() {
         google.script.run
           .withSuccessHandler(function(key) {
@@ -136,6 +217,7 @@
         const prompt = document.getElementById('prompt').value;
         const genBtn = document.getElementById('genBtn');
         const loader = document.getElementById('loader');
+        const status = document.getElementById('status');
         
         if (!apiKey || !prompt) {
           showStatus("Clé API et Prompt requis.", "error");
@@ -143,8 +225,8 @@
         }
 
         genBtn.disabled = true;
-        loader.innerText = "Génération IA en cours...";
         loader.style.display = 'block';
+        status.style.display = 'none';
 
         google.script.run
           .withSuccessHandler(function(response) {
@@ -169,6 +251,7 @@
         const html = document.getElementById('htmlInput').value;
         const insertBtn = document.getElementById('insertBtn');
         const loader = document.getElementById('loader');
+        const status = document.getElementById('status');
         
         if (!html.trim()) {
           showStatus("Veuillez entrer du code HTML.", "error");
@@ -176,8 +259,8 @@
         }
 
         insertBtn.disabled = true;
-        loader.innerText = "Insertion dans Google Docs...";
         loader.style.display = 'block';
+        status.style.display = 'none';
 
         google.script.run
           .withSuccessHandler(function(msg) {
@@ -199,10 +282,11 @@
 
       function showStatus(msg, type) {
         const status = document.getElementById('status');
-        status.innerText = msg;
+        const icon = type === 'success' ? 'check_circle' : 'error';
+        status.innerHTML = `<span class="material-icons">${icon}</span> ${msg}`;
         status.className = type;
-        status.style.display = 'block';
-        setTimeout(() => { status.style.display = 'none'; }, 5000);
+        status.style.display = 'flex';
+        setTimeout(() => { status.style.display = 'none'; }, 6000);
       }
     </script>
   </body>
