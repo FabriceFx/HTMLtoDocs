@@ -69,34 +69,6 @@ function insertHtmlIntoDoc(htmlString) {
 /**
  * Helper to append elements while forcing attribute preservation
  */
-function appendElementWithStyles(container, element) {
-  const type = element.getType();
-  
-  if (type == DocumentApp.ElementType.PARAGRAPH) {
-    const p = container.appendParagraph(element.asParagraph().copy());
-    p.setAttributes(element.asParagraph().getAttributes());
-  } 
-  else if (type == DocumentApp.ElementType.LIST_ITEM) {
-    const li = container.appendListItem(element.asListItem().copy());
-    li.setAttributes(element.asListItem().getAttributes());
-  } 
-  else if (type == DocumentApp.ElementType.TABLE) {
-    const sourceTable = element.asTable();
-    const targetTable = container.appendTable(sourceTable.copy());
-    
-    // Force copy of cell attributes (background, borders) which are often lost
-    for (let r = 0; r < sourceTable.getNumRows(); r++) {
-      for (let c = 0; c < sourceTable.getRow(r).getNumCells(); c++) {
-        const sCell = sourceTable.getRow(r).getCell(c);
-        const tCell = targetTable.getRow(r).getCell(c);
-        tCell.setAttributes(sCell.getAttributes());
-      }
-    }
-  } 
-  else if (type == DocumentApp.ElementType.INLINE_IMAGE) {
-    container.appendImage(element.asInlineImage().copy());
-  }
-}
 
 /**
  * Generates HTML using Gemini API (v1beta)
