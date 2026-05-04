@@ -43,7 +43,7 @@ function insertHtmlIntoDoc(htmlString) {
     const tempDoc = DocumentApp.openById(tempFileId);
     const tempBody = tempDoc.getBody();
 
-    // 3. Copy elements with Deep Style preservation
+    // 3. Copy elements with High Style preservation
     const numChildren = tempBody.getNumChildren();
     for (let i = 0; i < numChildren; i++) {
       const sourceElement = tempBody.getChild(i);
@@ -68,7 +68,75 @@ function insertHtmlIntoDoc(htmlString) {
 
 /**
  * Helper to append elements while forcing attribute preservation
+ * Version 2: Enhanced for Tables, Lists, Images and Cell contents
  */
+function appendElementWithStyles(container, element) {
+  const type = element.getType();
+  
+  if (type == DocumentApp.ElementType.PARAGRAPH) {
+    const sourceP = element.asParagraph();
+    // Special check for empty paragraphs to avoid extra spaces
+    if (sourceP.getText() === "" && sourceP.getNumChildren() === 0) {
+      container.appendParagraph("");
+      return;
+    }
+    const targetP = container.appendParagraph(sourceP.copy());
+    targetP.setAttributes(sourceP.getAttributes());
+  } 
+  else if (type == DocumentApp.ElementType.LIST_ITEM) {
+    const sourceLi = element.asListItem();
+    const targetLi = container.appendListItem(sourceLi.copy());
+    targetLi.setAttributes(sourceLi.getAttributes());
+    targetLi.setGlyphType(sourceLi.getGlyphType());
+  } 
+  else if (type == DocumentApp.ElementType.TABLE) {
+    const sourceTable = element.asTable();
+    const targetTable = container.appendTable();
+    targetTable.setAttributes(sourceTable.getAttributes());
+    
+    // Remove the default row created by appendTable()
+    if (targetTable.getNumRows() > 0) targetTable.removeRow(0);
+
+    for (let r = 0; r < sourceTable.getNumRows(); r++) {
+      const sourceRow = sourceTable.getRow(r);
+      const targetRow = targetTable.appendTableRow();
+      targetRow.setAttributes(sourceRow.getAttributes());
+      
+      for (let c = 0; c < sourceRow.getNumCells(); c++) {
+        const sourceCell = sourceRow.getCell(c);
+        const targetCell = targetRow.appendTableCell();
+        targetCell.setAttributes(sourceCell.getAttributes());
+        
+        // Preservation of column width
+        try {
+          const width = sourceTable.getColumnWidth(c);
+          if (width) targetTable.setColumnWidth(c, width);
+        } catch(e) {}
+
+        // Recursive copy of cell content
+        targetCell.clear();
+        for (let i = 0; i < sourceCell.getNumChildren(); i++) {
+          appendElementWithStyles(targetCell, sourceCell.getChild(i));
+        }
+        
+        // Remove empty paragraph left by clear()
+        if (targetCell.getNumChildren() > 1 && targetCell.getChild(0).asParagraph().getText() === "") {
+          targetCell.removeChild(targetCell.getChild(0));
+        }
+      }
+    }
+  } 
+  else if (type == DocumentApp.ElementType.INLINE_IMAGE) {
+    const sourceImg = element.asInlineImage();
+    try {
+      const targetImg = container.appendImage(sourceImg.getBlob());
+      targetImg.setWidth(sourceImg.getWidth());
+      targetImg.setHeight(sourceImg.getHeight());
+    } catch (e) {
+      container.appendImage(sourceImg.copy());
+    }
+  }
+}
 
 /**
  * Generates HTML using Gemini API (v1beta)
