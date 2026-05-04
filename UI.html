@@ -23,7 +23,7 @@
 
       body {
         font-family: 'Roboto', sans-serif;
-        padding: 16px;
+        padding: 12px;
         margin: 0;
         background-color: #f8f9fa;
         color: var(--md-sys-color-on-surface);
@@ -31,43 +31,43 @@
 
       .card {
         background: white;
-        border-radius: 16px;
-        padding: 20px;
-        margin-bottom: 16px;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.05);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         border: 1px solid var(--md-sys-color-surface-variant);
+        box-sizing: border-box;
       }
 
       h2 {
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 500;
-        margin: 0 0 16px 0;
+        margin: 0 0 12px 0;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
         color: var(--md-sys-color-primary);
       }
 
       .input-group {
-        margin-bottom: 16px;
-        position: relative;
+        margin-bottom: 12px;
       }
 
       label {
         display: block;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         font-weight: 500;
-        margin-bottom: 6px;
+        margin-bottom: 4px;
         color: var(--md-sys-color-on-surface-variant);
       }
 
       input[type="password"],
       textarea {
         width: 100%;
-        padding: 12px;
+        padding: 10px;
         border: 1px solid var(--md-sys-color-outline);
         border-radius: 8px;
-        font-size: 14px;
+        font-size: 13px;
         box-sizing: border-box;
         transition: border 0.2s;
         background-color: transparent;
@@ -76,48 +76,42 @@
       input:focus, textarea:focus {
         outline: none;
         border: 2px solid var(--md-sys-color-primary);
-        padding: 11px;
       }
 
       textarea {
         font-family: 'Roboto Mono', monospace;
         resize: vertical;
-        min-height: 80px;
+        min-height: 60px;
       }
 
       .btn-container {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
         width: 100%;
+        margin-top: 8px;
       }
 
       button {
         display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        height: 44px;
+        min-height: 40px;
         width: 100%;
-        padding: 0 24px;
-        border-radius: 22px;
-        font-size: 14px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 13px;
         font-weight: 500;
         border: none;
         cursor: pointer;
-        transition: background-color 0.2s, box-shadow 0.2s;
+        transition: all 0.2s;
         box-sizing: border-box;
+        text-align: center;
+        line-height: 1.2;
       }
 
       .btn-primary {
         background-color: var(--md-sys-color-primary);
         color: var(--md-sys-color-on-primary);
-        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-      }
-
-      .btn-primary:hover {
-        background-color: #004a7d;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
       }
 
       .btn-tonal {
@@ -125,59 +119,48 @@
         color: var(--md-sys-color-on-primary-container);
       }
 
-      .btn-tonal:hover {
-        background-color: #b5d1ff;
-      }
-
       button:disabled {
         background-color: #e1e2e5;
         color: #909194;
-        box-shadow: none;
         cursor: not-allowed;
       }
 
+      .material-icons {
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+
       #status {
-        margin-top: 12px;
-        font-size: 13px;
-        padding: 12px;
+        margin-top: 8px;
+        font-size: 12px;
+        padding: 10px;
         border-radius: 8px;
         display: none;
-        animation: fadeIn 0.3s;
       }
 
-      .success { background-color: #e6f4ea; color: var(--md-sys-color-success); display: flex !important; align-items: center; gap: 8px; }
-      .error { background-color: #fce8e6; color: var(--md-sys-color-error); display: flex !important; align-items: center; gap: 8px; }
-
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-5px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+      .success { background-color: #e6f4ea; color: var(--md-sys-color-success); display: flex !important; align-items: center; gap: 6px; }
+      .error { background-color: #fce8e6; color: var(--md-sys-color-error); display: flex !important; align-items: center; gap: 6px; }
 
       .loader {
         display: none;
-        margin-top: 12px;
+        margin-top: 8px;
         text-align: center;
-        font-size: 13px;
+        font-size: 12px;
         color: var(--md-sys-color-secondary);
-      }
-
-      .material-icons {
-        font-size: 20px;
       }
     </style>
   </head>
   <body>
 
-    <!-- Gemini AI Card -->
     <div class="card">
       <h2><span class="material-icons">auto_awesome</span> Génération IA</h2>
       <div class="input-group">
         <label for="apiKey">Clé API Gemini</label>
-        <input type="password" id="apiKey" placeholder="Saisissez votre clé...">
+        <input type="password" id="apiKey" placeholder="Votre clé API...">
       </div>
       <div class="input-group">
-        <label for="prompt">Votre demande (Prompt)</label>
-        <textarea id="prompt" placeholder="Ex: Invitation pour un cocktail..."></textarea>
+        <label for="prompt">Votre demande</label>
+        <textarea id="prompt" placeholder="Ex: Newsletter soldes d'été..."></textarea>
       </div>
       <div class="btn-container">
         <button id="genBtn" class="btn-tonal" onclick="generateWithGemini()">
@@ -186,11 +169,10 @@
       </div>
     </div>
 
-    <!-- HTML Content Card -->
     <div class="card">
       <h2><span class="material-icons">code</span> Code HTML</h2>
       <div class="input-group">
-        <textarea id="htmlInput" style="height: 150px;" placeholder="<html>...</html>"></textarea>
+        <textarea id="htmlInput" style="height: 120px;" placeholder="<html>...</html>"></textarea>
       </div>
       <div class="btn-container">
         <button id="insertBtn" class="btn-primary" onclick="insertHtml()">
@@ -198,9 +180,7 @@
         </button>
       </div>
       
-      <div id="loader" class="loader">
-        <span class="material-icons rotating">sync</span> Traitement en cours...
-      </div>
+      <div id="loader" class="loader">Traitement en cours...</div>
       <div id="status"></div>
     </div>
 
@@ -235,15 +215,15 @@
             loader.style.display = 'none';
             if (response.success) {
               document.getElementById('htmlInput').value = response.html;
-              showStatus("HTML généré avec succès !", "success");
+              showStatus("HTML généré !", "success");
             } else {
-              showStatus("Erreur Gemini : " + response.error, "error");
+              showStatus("Erreur : " + response.error, "error");
             }
           })
           .withFailureHandler(function(err) {
             genBtn.disabled = false;
             loader.style.display = 'none';
-            showStatus("Erreur réseau : " + err, "error");
+            showStatus("Erreur réseau", "error");
           })
           .generateHtmlWithGemini(prompt, apiKey);
       }
@@ -270,13 +250,13 @@
             if (msg.includes("Erreur")) {
               showStatus(msg, "error");
             } else {
-              showStatus(msg, "success");
+              showStatus(msg, "Succès !", "success");
             }
           })
           .withFailureHandler(function(err) {
             insertBtn.disabled = false;
             loader.style.display = 'none';
-            showStatus("Erreur fatale : " + err, "error");
+            showStatus("Erreur fatale", "error");
           })
           .insertHtmlIntoDoc(html);
       }
@@ -287,7 +267,7 @@
         status.innerHTML = `<span class="material-icons">${icon}</span> ${msg}`;
         status.className = type;
         status.style.display = 'flex';
-        setTimeout(() => { status.style.display = 'none'; }, 6000);
+        setTimeout(() => { status.style.display = 'none'; }, 5000);
       }
     </script>
   </body>
