@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        padding: 20px;
+        color: #333;
+        background-color: #f8f9fa;
+      }
+      h2 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        color: #1a73e8;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .section {
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #5f6368;
+      }
+      input, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #dadce0;
+        border-radius: 6px;
+        font-size: 13px;
+        box-sizing: border-box;
+      }
+      textarea {
+        font-family: 'Courier New', Courier, monospace;
+        resize: vertical;
+      }
+      button {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        font-size: 13px;
+      }
+      button:hover {
+        background-color: #1765cc;
+      }
+      button.secondary {
+        background-color: #f1f3f4;
+        color: #3c4043;
+        border: 1px solid #dadce0;
+      }
+      button.secondary:hover {
+        background-color: #e8eaed;
+      }
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+      #status {
+        margin-top: 10px;
+        font-size: 12px;
+        padding: 8px;
+        border-radius: 4px;
+        display: none;
+      }
+      .success { background-color: #e6f4ea; color: #137333; display: block !important; }
+      .error { background-color: #fce8e6; color: #c5221f; display: block !important; }
+      
+      .loader {
+        display: none;
+        text-align: center;
+        margin-top: 8px;
+        font-size: 12px;
+        color: #666;
+      }
+      hr { border: 0; border-top: 1px solid #eee; margin: 15px 0; }
+    </style>
+  </head>
+  <body>
+
+    <!-- Section 1: Gemini Generation -->
+    <div class="section">
+      <h2>✨ Générer avec IA</h2>
+      <div class="container">
+        <div>
+          <label>Clé API Gemini</label>
+          <input type="password" id="apiKey" placeholder="Saisissez votre clé API...">
+        </div>
+        <div>
+          <label>Votre demande (Prompt)</label>
+          <textarea id="prompt" style="height: 80px;" placeholder="Ex: Crée une newsletter pour annoncer les soldes d'été avec un bouton rouge..."></textarea>
+        </div>
+        <button id="genBtn" onclick="generateWithGemini()">Générer le HTML</button>
+      </div>
+    </div>
+
+    <!-- Section 2: HTML Insertion -->
+    <div class="section">
+      <h2>📄 Code HTML</h2>
+      <div class="container">
+        <textarea id="htmlInput" style="height: 180px;" placeholder="<html>...</html>"></textarea>
+        <button id="insertBtn" onclick="insertHtml()">Insérer dans le Brouillon</button>
+        <div id="loader" class="loader">Action en cours...</div>
+        <div id="status"></div>
+      </div>
+    </div>
+
+    <script>
+      // Load saved API key on startup
+      window.onload = function() {
+        google.script.run
+          .withSuccessHandler(function(key) {
+            if (key) document.getElementById('apiKey').value = key;
+          })
+          .getSavedApiKey();
+      };
+
+      function generateWithGemini() {
+        const apiKey = document.getElementById('apiKey').value;
+        const prompt = document.getElementById('prompt').value;
+        const genBtn = document.getElementById('genBtn');
+        const loader = document.getElementById('loader');
+        
+        if (!apiKey || !prompt) {
+          showStatus("Clé API et Prompt requis.", "error");
+          return;
+        }
+
+        genBtn.disabled = true;
+        loader.innerText = "Génération IA en cours...";
+        loader.style.display = 'block';
+
+        google.script.run
+          .withSuccessHandler(function(response) {
+            genBtn.disabled = false;
+            loader.style.display = 'none';
+            if (response.success) {
+              document.getElementById('htmlInput').value = response.html;
+              showStatus("HTML généré avec succès !", "success");
+            } else {
+              showStatus("Erreur Gemini : " + response.error, "error");
+            }
+          })
+          .withFailureHandler(function(err) {
+            genBtn.disabled = false;
+            loader.style.display = 'none';
+            showStatus("Erreur réseau : " + err, "error");
+          })
+          .generateHtmlWithGemini(prompt, apiKey);
+      }
+
+      function insertHtml() {
+        const html = document.getElementById('htmlInput').value;
+        const insertBtn = document.getElementById('insertBtn');
+        const loader = document.getElementById('loader');
+        
+        if (!html.trim()) {
+          showStatus("Veuillez entrer du code HTML.", "error");
+          return;
+        }
+
+        insertBtn.disabled = true;
+        loader.innerText = "Insertion dans Google Docs...";
+        loader.style.display = 'block';
+
+        google.script.run
+          .withSuccessHandler(function(msg) {
+            insertBtn.disabled = false;
+            loader.style.display = 'none';
+            if (msg.includes("Erreur")) {
+              showStatus(msg, "error");
+            } else {
+              showStatus(msg, "success");
+            }
+          })
+          .withFailureHandler(function(err) {
+            insertBtn.disabled = false;
+            loader.style.display = 'none';
+            showStatus("Erreur fatale : " + err, "error");
+          })
+          .insertHtmlIntoDoc(html);
+      }
+
+      function showStatus(msg, type) {
+        const status = document.getElementById('status');
+        status.innerText = msg;
+        status.className = type;
+        status.style.display = 'block';
+        setTimeout(() => { status.style.display = 'none'; }, 5000);
+      }
+    </script>
+  </body>
+</html>
