@@ -130,3 +130,6 @@ This project is licensed under the **MIT** License.
 
 **Author: Fabrice FAUCHEUX**
 [GitHub Profile](https://github.com/FabriceFx)
+
+---
+<p align="center"><a href="https://faucheux.bzh" target="_blank" style="color: inherit; text-decoration: none;">&lt;&gt; par Fabrice Faucheux</a></p>
